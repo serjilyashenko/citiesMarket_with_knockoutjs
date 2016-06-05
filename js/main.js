@@ -1,6 +1,11 @@
 $(document).ready(function () {
 	console.log("Hello Cities Market");
 
+	function koScope(){
+		var self = this;
+		self.test = ko.observable("hello knockout");
+	}
+
 	var tabsMethod = "все";
 	var citiesData = {};
 	var filtredData = {};
@@ -127,6 +132,8 @@ $(document).ready(function () {
 		event.preventDefault();
 		refreshData();
 	});
+
+	ko.applyBindings(new koScope(), document.getElementsByTagName("body")[0]);
 
 	refreshData();
 });
