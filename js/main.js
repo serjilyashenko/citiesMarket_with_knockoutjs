@@ -4,6 +4,24 @@ $(document).ready(function () {
 	function koScope(){
 		var self = this;
 		self.test = ko.observable("hello knockout");
+
+		self.paginator = {
+			shiftLeft: function(){ shiftPagContainer(200); },
+			shiftRight: function(){ shiftPagContainer(-200); },
+			select: function(data, event){
+				if(event.target.className == "pagecontainer")
+					return;
+				$(".pagecontainer div").removeClass("active");
+				var newActiveNumber = parseInt(event.target.className);
+				var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
+				var activeItem = $($(".pagecontainer div")[newActiveNumber]);
+				var shift = targetPosition - activeItem.offset().left;
+				activeItem.addClass("active");
+				shiftPagContainer(shift - 20);
+				firstCityNum = newActiveNumber * maxItemsOnPage;
+				showSome(filtredData);
+			}
+		};
 	}
 
 	var tabsMethod = "все";
@@ -30,26 +48,19 @@ $(document).ready(function () {
     });
 	// end tabs action
 
-    // Footer actions
-    $(".paginator .prev").on('click', function(){
-            shiftPagContainer(200);
-        });
-    $(".paginator .next").on('click', function(){
-            shiftPagContainer(-200);
-        });
-    $(".pagecontainer").on('click', function(e){
-            if(e.target.className == "pagecontainer")
-                return;
-            $(".pagecontainer div").removeClass("active");
-            var newActiveNumber = parseInt(e.target.className);
-            var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
-            var activeItem = $($(".pagecontainer div")[newActiveNumber]);
-            var shift = targetPosition - activeItem.offset().left;
-            activeItem.addClass("active");
-            shiftPagContainer(shift - 20);
-            firstCityNum = newActiveNumber * maxItemsOnPage;
-			showSome(filtredData);
-    });
+//    $(".pagecontainer").on('click', function(e){
+//            if(e.target.className == "pagecontainer")
+//                return;
+//            $(".pagecontainer div").removeClass("active");
+//            var newActiveNumber = parseInt(e.target.className);
+//            var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
+//            var activeItem = $($(".pagecontainer div")[newActiveNumber]);
+//            var shift = targetPosition - activeItem.offset().left;
+//            activeItem.addClass("active");
+//            shiftPagContainer(shift - 20);
+//            firstCityNum = newActiveNumber * maxItemsOnPage;
+//			showSome(filtredData);
+//    });
 
     // showPaginator - showing and listening of page buttons of paginator
     var shiftPagContainer = function(shift){
