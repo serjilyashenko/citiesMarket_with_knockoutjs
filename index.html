@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./css/styles.css">
+	<title>Cities Market</title>
+</head>
+<body>
+	<div class="headercontent">
+		<div class="header">
+			<div class="top">
+				<div class="container">
+					<div class="top_wrapper">
+						<div class="logo">
+							<img src="./img/The-Virtual-City-Logo.png" alt="logo">
+						</div>
+						<div class="title">Выбери себе <br>Город: </div>
+					</div>
+						<div class="searchForm">
+							<form id="searchForm" action="">
+								<div class="formWrapper">
+									<div class="yearForm formCol">
+										<div class="formTittle">года постройки</div>
+										<div class="formInputWrapper">
+											<div class="formParamTittle">c</div>
+											<input class="formInput" type="number" placeholder="0" name="yearMin" value="0">
+										</div>
+										<div class="formInputWrapper">
+											<div class="formParamTittle">по</div>
+											<input class="formInput" type="text" placeholder="2016" name="yearMax" value="2016">
+										</div>
+									</div>
+									<div class="populationForm formCol">
+										<div class="formTittle">и с населением</div>
+										<div class="formInputWrapper">
+											<div class="formParamTittle">от</div>
+											<input class="formInput" type="text" placeholder="100" name="populationMin" value="100">
+											</div>
+										<div class="formInputWrapper">
+											<div class="formParamTittle">до</div>
+											<input class="formInput" type="text" placeholder="25000000" name="populationMax" value="25000000">
+										</div>
+									</div>
+									<input class="unVisibleSubmit" type="submit">
+								</div>
+							</form>
+						</div>
+				</div>
+			</div>
+			<div class="menu-wrapper">
+				<div class="container">
+					<div class="menu">
+						<ul>
+							<li class="tab active" data-method="все">
+								<a href="#">все</a>
+							</li>
+							<li class="tab" data-method="евразия">
+								<a href="#">евразия</a>
+							</li>
+							<li class="tab" data-method="северная америка">
+								<a href="#">северная америка</a>
+							</li>
+							<li class="tab" data-method="южная америка">
+								<a href="#">южная америка</a>
+							</li>
+							<li class="tab" data-method="африка">
+								<a href="#">африка</a>
+							</li>
+							<li class="tab" data-method="авcтралия">
+								<a href="#">австралия</a>
+							</li>
+							<li class="tab" data-method="антарктида">
+								<a href="#">антарктида</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content container">
+		</div>
+	</div>
+	</div>
+	<div class="footer">
+		<div class="container">
+			<div class="paginator">
+				<div class="prev">
+					<div>&#60;&#60;</div>
+				</div>
+					<div class="pagecontainer_wrap">
+						<div class="pagecontainer"></div>
+					</div>
+				<div class="next">
+					<div>&#62;&#62;</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./js/jquery-1.12.0.min.js"></script>
+	<script src="./knockout-3.4.0.js"></script>
+	<script src="./js/main.js"></script>
+</body>
+</html>

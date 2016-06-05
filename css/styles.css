@@ -1,0 +1,296 @@
+@font-face {
+	font-family: MyriadPro;
+	src: url(../fonts/MyriadPro-Regular.otf);
+}
+
+html,body{
+	margin: 0px;
+	height: 100%;
+	min-width: 600px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	font-family: MyriadPro, arial;
+}
+.container {
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1230px) {
+  .container {
+    width: 1200px;
+  }
+}
+
+.header{
+	border-bottom: 1px solid #fbfbfb;
+}
+
+.headercontent {
+	min-height: 100%;
+}
+
+.content {
+	box-sizing: border-box;
+	padding-bottom: 44px;
+	padding-left: 0px;
+	margin-top: 12px;
+/*	overflow: hidden;*/
+}
+
+
+.top, .footer {
+	min-height: 110px;
+	background-color: #151515;
+	background: linear-gradient(to bottom, #343434, #151515);
+	border-bottom: 1px solid #000;
+}
+
+.footer {
+	margin-top: -45px;
+	height: 44px;
+}
+
+.menu-wrapper {
+	min-height: 60px;
+	background: #f8bb49;
+	background: linear-gradient(to bottom, #f8bb49, #f7941d);
+	border-top: solid 1px #fcdda4;
+	border-bottom: solid 1px #a16013;
+}
+
+.menu {
+	padding: 0px;
+	margin: 0px;
+	margin-top: 10px;
+	font-size: 21px;
+}
+
+.menu ul {
+	list-style-type: none;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+}
+
+.menu ul > li {
+	float: left;
+	padding-right: 37px;
+/*	padding-top: 11px;*/
+/*	padding-bottom: 11px;*/
+}
+
+.tab  a {
+	display: block;
+	text-transform: uppercase;
+	padding-left: 13px;
+	padding-right: 13px;
+	padding-top: 11px;
+	padding-bottom: 11px;
+	text-decoration: none;
+	color: #333333;
+	font-family: MyriadPro, arial;
+	font-size: 12px;
+}
+
+.active a {
+	color: #ff9d00;
+	background: #151515;
+	border-radius: 5px;
+}
+
+.paginator {
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 40px;
+    overflow: hidden;
+}
+
+.paginator > div {
+    float: left;
+}
+
+.pagecontainer_wrap {
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: 0px;
+	max-width: 350px;
+	width: 0px;
+    overflow: hidden;
+}
+
+.pagecontainer {
+    width: 10000px;
+    overflow: hidden;
+    position: relative;
+    left: 0;
+    transition: .3s;
+}
+
+.paginator .prev,
+.paginator .next,
+.pagecontainer div {
+    float: left;
+    min-width: 20px;
+    border: 1px solid rgb(227, 227, 227);
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+    cursor: pointer;
+    margin: 2px;
+    padding: 2px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-family: MyriadPro, arial;
+}
+
+.pagecontainer .active {
+    background-color: rgb(129, 126, 126);
+}
+
+.cityImage {
+	float: left;
+}
+
+.cityImage img {
+/*	margin-bottom: 10px;*/
+	height: 120px;
+	width: 120px;
+	border: 1px solid black;
+}
+
+.cityDescripts {
+	margin-left: 145px;
+}
+
+.cityDesctipt {
+	margin-bottom: 5px;
+}
+
+.element {
+	margin-bottom: 10px;
+/*	overflow: hidden;*/
+}
+
+.logo {
+	margin-right: 28px;
+	margin-top: 9px;
+	color: black;
+/*	background-color: white;*/
+	border: 1px solid white;
+	float: left;
+	height: 91px;
+	width: 91px;
+}
+.logo>img{
+	height: 91px;
+	width: 91px;
+}
+
+.top_wrapper {
+/*	margin-top: 45px;*/
+	overflow: hidden;
+	float: left;
+}
+
+.title {
+	color: white;
+	margin-left: 0px;
+	margin-top: 12px;
+	font-size: 35px;
+	float: left;
+}
+
+.searchForm {
+	color: white;
+/*	background-color: white;*/
+	margin-top: 15px;
+	margin-left: 44px;
+	margin-bottom: 12px;
+/*	border: 1px solid white;*/
+	font-size: 15px;
+	min-width: 500px;
+	float: left;
+}
+
+.yearForm {
+	float: left;
+}
+
+.formWrapper {
+	overflow: hidden;
+}
+
+.formTittle {
+	margin-bottom: 6px;
+}
+
+.formParamTittle {
+	float: left;
+	width: 18px;
+}
+
+.formInput {
+	color: white;
+	font-family:  MyriadPro, arial;
+	margin-left: 3px;
+	max-width: 89px;
+	height: 16px;
+	background: #f8bb49;
+	background: linear-gradient(to bottom, rgb(242, 205, 135), rgb(244, 179, 102));
+}
+
+.formCol {
+	margin-right: 20px;
+}
+
+.populationForm {
+	margin-left: 232px;;
+}
+
+.formInputWrapper {
+	padding-top: 5px;
+}
+
+.unVisibleSubmit {
+	display: none;
+}
+@media (max-width: 992px){
+	.menu ul > li {
+		float: none;
+		padding-right: 113px;
+	}
+	.searchForm{
+		margin-left: 0px;
+	}
+	.container{
+		padding-left: 9%;
+	}
+	.populationForm {
+		margin-left: 304px;
+	}
+	.searchForm {
+		margin-top: 34px;
+	}
+	.menu {
+		width: 530px;
+	}
+	.tab {
+		display: none;
+	}
+	.tab.active {
+		display: block;
+	}
+	.menu-wrapper:hover .tab {
+		display: block;
+	}
+}
+.continetFields {
+	text-transform: capitalize;
+}
