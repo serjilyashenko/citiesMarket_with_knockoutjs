@@ -77,7 +77,18 @@
 				</div>
 			</div>
 		</div>
-		<div class="content container">
+		<div class="content container" data-bind="foreach: filtredData().items">
+			<div class="element">
+				<div class="cityImage"><img src="" alt="city image" data-bind="attr: { src: cityImage }"></div>
+				<div class="cityDescripts">
+					<div class="cityDescript cityNumber">Город номр: ' + item.num + '</div>
+					<div class="cityDescript cityName">Имя: ' + item.name + '</div>
+					<div class"cityDescript cityContinent"> Континент: <span class="continetFields">' + item.continent + '</span></div>
+					<div class="cityDescript cityYear">Год: ' + item.year + '</div>
+					<div class="cityDescript cityPopulation">Население: ' + item.population + '</div>
+				</div>
+				<div style="clear: left"></div>
+			</div>
 		</div>
 	</div>
 	</div>
