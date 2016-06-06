@@ -18,17 +18,26 @@ $(document).ready(function () {
 				activeItem.addClass("active");
 				shiftPagContainer(shift - 20);
 				firstCityNum = newActiveNumber * maxItemsOnPage;
-				showSome(filtredData);
+				// todo: изменить структуру для knockout
+				koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
+				//showSome(filtredData);
 			}
 		};
 
-		self.cityImage = "https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg";
-		self.detales = "hello";
+		//self.cityImage = "https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg";
+		//self.detales = "hello";
+		self.outputData = {
+			populationMin: ko.observable(),
+			populationMax: ko.observable(),
+			yearMin: ko.observable(),
+			yearMax: ko.observable(),
+			items: ko.observableArray([])
+		};
 	}
 
 	var tabsMethod = "все";
 	var citiesData = {};
-	var filtredData = {};
+	var filteredData = {};
 	var firstCityNum = 0;
 	var maxItemsOnPage = 10;
 
@@ -43,10 +52,12 @@ $(document).ready(function () {
 		// console.log(selectedItem.siblings());
 		// console.log("Filter: Selected " + tabsPosition + " tab; Filtration Method = " + tabsMethod);
 		// console.dir(filterData(citiesData));
-		filtredData = filterData(citiesData, tabsMethod);
-		console.dir(filtredData);
-		showPaginator(filtredData);
-		showSome(filtredData);
+		filteredData = filterData(citiesData, tabsMethod);
+		console.dir(filteredData);
+		firstCityNum = 0;
+		showPaginator(filteredData);
+		// showSome(filtredData);
+		koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
     });
 	// end tabs action
 
@@ -84,9 +95,15 @@ $(document).ready(function () {
 		};
 		$.post('./backend/refreshData.php', data, function(response){
 			citiesData = response;
-			filtredData = filterData(citiesData, tabsMethod);
-			showPaginator(filtredData);
-			showSome(filtredData);
+			filteredData = filterData(citiesData, tabsMethod);
+			showPaginator(filteredData);
+			// showSome(filteredData);
+
+		// todo: придумать что-то со структурой и убрать вызов koScope1 отсюда
+		// console.dir(filteredData);
+		koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
+		// console.dir(koScope1.outputData.items())
+
 		}, 'json');
 
 	};
@@ -98,6 +115,7 @@ $(document).ready(function () {
 		var filteredData = citiesData.items.filter(function(item){
 			return (item.continent === tabsMethod);
 		});
+
 		return filteredData;
 	};
 
@@ -132,7 +150,9 @@ $(document).ready(function () {
 		refreshData();
 	});
 
-	ko.applyBindings(new koScope(), document.getElementsByTagName("body")[0]);
+	koScope1 = new koScope();
+
+	ko.applyBindings(koScope1, document.getElementsByTagName("body")[0]);
 
 	refreshData();
 });
