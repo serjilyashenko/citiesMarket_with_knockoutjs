@@ -20,17 +20,16 @@ $(document).ready(function () {
 				firstCityNum = newActiveNumber * maxItemsOnPage;
 				// todo: изменить структуру для knockout
 				koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
-				//showSome(filtredData);
 			}
 		};
 
 		//self.cityImage = "https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg";
 		//self.detales = "hello";
 		self.outputData = {
-			populationMin: ko.observable(),
-			populationMax: ko.observable(),
-			yearMin: ko.observable(),
-			yearMax: ko.observable(),
+			populationMin: ko.observable(100),
+			populationMax: ko.observable(25000000),
+			yearMin: ko.observable(0),
+			yearMax: ko.observable(2016),
 			items: ko.observableArray([])
 		};
 	}
@@ -56,7 +55,6 @@ $(document).ready(function () {
 		console.dir(filteredData);
 		firstCityNum = 0;
 		showPaginator(filteredData);
-		// showSome(filtredData);
 		koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
     });
 	// end tabs action
@@ -88,22 +86,18 @@ $(document).ready(function () {
 	//Content actions
 	var refreshData = function(){
 		var data = {
-			"populationMin": $("input[name='populationMin']").val(),
-			"populationMax": $("input[name='populationMax']").val(),
-			"yearMin": $("input[name='yearMin']").val(),
-			"yearMax": $("input[name='yearMax']").val()
+			// "populationMin": $("input[name='populationMin']").val(),
+			"populationMin": koScope1.outputData.populationMin(),
+			"populationMax": koScope1.outputData.populationMax(),
+			"yearMin": koScope1.outputData.yearMin(),
+			"yearMax": koScope1.outputData.yearMax()
 		};
 		$.post('./backend/refreshData.php', data, function(response){
 			citiesData = response;
 			filteredData = filterData(citiesData, tabsMethod);
 			showPaginator(filteredData);
-			// showSome(filteredData);
-
-		// todo: придумать что-то со структурой и убрать вызов koScope1 отсюда
-		// console.dir(filteredData);
-		koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
-		// console.dir(koScope1.outputData.items())
-
+			// todo: придумать что-то со структурой и убрать вызов koScope1 отсюда
+			koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
 		}, 'json');
 
 	};
@@ -125,23 +119,6 @@ $(document).ready(function () {
 		$("input[name='populationMax']").val(citiesData.meta.populationMax);
 		$("input[name='yearMin']").val(citiesData.meta.yearMin);
 		$("input[name='yearMax']").val(citiesData.meta.yearMax);
-		var items = filtredData.slice(firstCityNum, firstCityNum + maxItemsOnPage);
-		// console.log(items);
-		items.forEach(function(item){
-				var template = '<div class="element">\
-									<div class="cityImage"><img src="' +  item.image + '" alt=""></div>\
-									<div class="cityDescripts">\
-										<div class="cityDescript cityNumber">Город номр: ' + item.num + '</div>\
-										<div class="cityDescript cityName">Имя: ' + item.name + '</div>\
-										<div class"cityDescript cityContinent"> Континент: <span class="continetFields">' + item.continent + '</span></div>\
-										<div class="cityDescript cityYear">Год: ' + item.year + '</div>\
-										<div class="cityDescript cityPopulation">Население: ' + item.population + '</div>\
-									</div>\
-									<div style="clear: left"></div>\
-								</div>\
-								';
-				$(".content").append(template);
-		});
 	};
 	//end content actions
 
