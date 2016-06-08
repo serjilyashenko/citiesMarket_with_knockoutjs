@@ -4,6 +4,17 @@ $(document).ready(function () {
 	function koScope(){
 		var self = this;
 
+		self.tabs = new (function(){
+			this.tabs = ko.observableArray([
+				"все", "евразия", "северная америка", "южная америка", "африка", "австралия", "антарктида"
+			]);
+		})();
+
+		// submit from search form
+		self.searchForm = function(){
+			refreshData();
+		};
+
 		self.paginator = {
 			shiftLeft: function(){ shiftPagContainer(200); },
 			shiftRight: function(){ shiftPagContainer(-200); },
@@ -109,23 +120,9 @@ $(document).ready(function () {
 		var filteredData = citiesData.items.filter(function(item){
 			return (item.continent === tabsMethod);
 		});
-
 		return filteredData;
 	};
-
-	var showSome = function(filtredData){
-		$('.content').empty();
-		$("input[name='populationMin']").val(citiesData.meta.populationMin);
-		$("input[name='populationMax']").val(citiesData.meta.populationMax);
-		$("input[name='yearMin']").val(citiesData.meta.yearMin);
-		$("input[name='yearMax']").val(citiesData.meta.yearMax);
-	};
 	//end content actions
-
-	$('#searchForm').submit(function(event){
-		event.preventDefault();
-		refreshData();
-	});
 
 	koScope1 = new koScope();
 
