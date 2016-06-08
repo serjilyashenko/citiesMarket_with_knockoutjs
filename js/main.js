@@ -5,9 +5,48 @@ $(document).ready(function () {
 		var self = this;
 
 		self.tabs = new (function(){
-			this.tabs = ko.observableArray([
-				"все", "евразия", "северная америка", "южная америка", "африка", "австралия", "антарктида"
+			var self = this;
+			this.activeMethod = ko.observable("все");
+			this.elements = ko.observableArray([
+				{
+					title: "все",
+					searchMethod: "все"
+				},
+				{
+					title: "евразия",
+					searchMethod: "евразия"
+				},
+				{
+					title: "северная америка",
+					searchMethod: "северная америка"
+				},
+				{
+					title: "южная америка",
+					searchMethod: "южная америка"
+				},
+				{
+					title: "африка",
+					searchMethod: "африка"
+				},
+				{
+					title: "авcтралия",
+					searchMethod: "авcтралия"
+				},
+				{
+					title: "антарктида",
+					searchMethod: "антарктида"
+				}
 			]);
+
+			this.onClick = function(tabElement){
+				self.activeMethod(tabElement.title);
+				console.log(self.activeMethod());
+
+				filteredData = filterData(citiesData, self.activeMethod());
+				firstCityNum = 0;
+				// todo: убрать как-то koScope1
+				koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
+			};
 		})();
 
 		// submit from search form
@@ -45,30 +84,10 @@ $(document).ready(function () {
 		};
 	}
 
-	var tabsMethod = "все";
 	var citiesData = {};
 	var filteredData = {};
 	var firstCityNum = 0;
 	var maxItemsOnPage = 10;
-
-	// tabs actions
-	$('.tab').on('click', function () {
-		var selectedItem = $(this);
-		var tabsPosition = selectedItem.index();
-		tabsMethod = selectedItem.data('method');
-		var selectedItem;
-		selectedItem.addClass('active');
-		selectedItem.siblings().removeClass('active');
-		// console.log(selectedItem.siblings());
-		// console.log("Filter: Selected " + tabsPosition + " tab; Filtration Method = " + tabsMethod);
-		// console.dir(filterData(citiesData));
-		filteredData = filterData(citiesData, tabsMethod);
-		console.dir(filteredData);
-		firstCityNum = 0;
-		showPaginator(filteredData);
-		koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );
-    });
-	// end tabs action
 
     // showPaginator - showing and listening of page buttons of paginator
     var shiftPagContainer = function(shift){
@@ -105,7 +124,7 @@ $(document).ready(function () {
 		};
 		$.post('./backend/refreshData.php', data, function(response){
 			citiesData = response;
-			filteredData = filterData(citiesData, tabsMethod);
+			filteredData = filterData(citiesData, koScope1.tabs.activeMethod());
 			showPaginator(filteredData);
 			// todo: придумать что-то со структурой и убрать вызов koScope1 отсюда
 			koScope1.outputData.items( filteredData.slice(firstCityNum, firstCityNum + maxItemsOnPage) );

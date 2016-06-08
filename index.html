@@ -31,11 +31,11 @@
 										</div>
 									</div>
 									<div class="populationForm formCol">
-										<div class="formTittle">и с населением</div>
+										<div class="formTittle">с населением</div>
 										<div class="formInputWrapper">
 											<div class="formParamTittle">от</div>
 											<input class="formInput" type="text" placeholder="100" name="populationMin" value="100" data-bind="value: populationMin">
-											</div>
+										</div>
 										<div class="formInputWrapper">
 											<div class="formParamTittle">до</div>
 											<input class="formInput" type="text" placeholder="25000000" name="populationMax" value="25000000" data-bind="value: populationMax">
@@ -50,27 +50,9 @@
 			<div class="menu-wrapper">
 				<div class="container">
 					<div class="menu">
-						<ul>
-							<li class="tab active" data-method="все">
-								<a href="#"7>все</a>
-							</li>
-							<li class="tab" data-method="евразия">
-								<a href="#">евразия</a>
-							</li>
-							<li class="tab" data-method="северная америка">
-								<a href="#">северная америка</a>
-							</li>
-							<li class="tab" data-method="южная америка">
-								<a href="#">южная америка</a>
-							</li>
-							<li class="tab" data-method="африка">
-								<a href="#">африка</a>
-							</li>
-							<li class="tab" data-method="авcтралия">
-								<a href="#">австралия</a>
-							</li>
-							<li class="tab" data-method="антарктида">
-								<a href="#">антарктида</a>
+						<ul data-bind="foreach: tabs.elements()">
+							<li class="tab" data-bind="css: {active: $data.searchMethod == $root.tabs.activeMethod()}, click: $root.tabs.onClick">
+								<a href="#" data-bind="text: $data.title"></a>
 							</li>
 						</ul>
 					</div>
