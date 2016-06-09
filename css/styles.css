@@ -176,6 +176,8 @@ html,body{
 
 .element {
 	margin-bottom: 10px;
+	/*todo: использовать visibility, чтобы не появлялся шаблон пока он не заполнен с помощью knockout*/
+	/*visibility: hidden;*/
 /*	overflow: hidden;*/
 }
 
