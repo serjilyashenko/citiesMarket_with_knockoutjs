@@ -50,6 +50,7 @@ function koScope(){
 			filteredData(self.filterData(citiesData, self.activeMethod()));
 			var paginatorObj = parent.paginator;
 			paginatorObj.firstCityNum = 0;
+			paginatorObj.activePaginationItem(0);
 			parent.outputData.items( filteredData().slice(paginatorObj.firstCityNum, paginatorObj.firstCityNum + paginatorObj.maxItemsOnPage()) );
 		};
 		this.filterData = function(citiesData, tabsMethod){
