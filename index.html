@@ -82,7 +82,7 @@
 				</div>
 					<div class="pagecontainer_wrap" data-bind="style: {width: width}">
 						<div class="pagecontainer" data-bind="foreach: paginationItems">
-							<div data-bind="text: ($data + 1), attr:{'class': $data}, click: $parent.select, css:{active: $parent.activePaginationItem() == $data}"></div>
+							<div data-bind="text: ($data + 1), click: $parent.select, css:{active: $parent.activePaginationItem() == $data}"></div>
 						</div>
 					</div>
 				<div class="next" data-bind="click: shiftRight">

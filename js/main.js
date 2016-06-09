@@ -94,11 +94,11 @@ function koScope(){
 				cont.css('left',(cont.offset().left - lastItem.offset().left - lastItem.width() - 10 + contWrap.width()) + "px");
 		};
 		this.select = function(data, event){
-			self.activePaginationItem( parseInt(event.target.className) );
-			// var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
-			// var activeItem = $($(".pagecontainer div")[newActiveNumber]);
-			// var shift = targetPosition - activeItem.offset().left;
-			// this.shiftPagContainer(shift - 20);
+			self.activePaginationItem(data);
+			var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
+			var activeItem = $($(".pagecontainer div")[self.activePaginationItem()]);
+			var shift = targetPosition - activeItem.offset().left;
+			self.shiftPagContainer(shift - 20);
 			self.firstCityNum = self.activePaginationItem() * self.maxItemsOnPage();
 			parent.outputData.items( filteredData().slice(self.firstCityNum, self.firstCityNum + self.maxItemsOnPage()) );
 		};
