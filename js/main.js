@@ -6,6 +6,11 @@ $(document).ready(function () {
 function koScope(){
 	var self = this;
 
+	// privet vars
+	var citiesData = {};
+	var filteredData = ko.observableArray([]);
+	//end of the privet vars
+
 	// Filtration tabs object
 	this.tabs = new (function(parent){
 		var self = this;
@@ -42,9 +47,10 @@ function koScope(){
 		]);
 		this.onClick = function(tabElement){
 			self.activeMethod(tabElement.title);
-			filteredData = self.filterData(citiesData, self.activeMethod());
-			firstCityNum = 0;
-			parent.outputData.items( filteredData.slice(parent.paginator.firstCityNum, parent.paginator.firstCityNum + parent.paginator.maxItemsOnPage) );
+			filteredData(self.filterData(citiesData, self.activeMethod()));
+			var paginatorObj = parent.paginator;
+			paginatorObj.firstCityNum = 0;
+			parent.outputData.items( filteredData().slice(paginatorObj.firstCityNum, paginatorObj.firstCityNum + paginatorObj.maxItemsOnPage()) );
 		};
 		this.filterData = function(citiesData, tabsMethod){
 			if(tabsMethod === "все"){
@@ -61,7 +67,18 @@ function koScope(){
 	this.paginator = new (function(parent){
 		var self = this;
 		this.firstCityNum = 0;
-		this.maxItemsOnPage = 10;
+		this.maxItemsOnPage = ko.observable(10);
+		this.activePaginationItem = ko.observable(0);
+		this.paginationItems = ko.computed(function(){
+			var res = [];
+			for(var i = 0; i < (filteredData().length/self.maxItemsOnPage()); i++){
+				res.push(i);
+			};
+			return res;
+		});
+		this.width = ko.computed(function(){
+			return (self.paginationItems().length * 30 + 'px');
+		}, this);
 
 		this.shiftLeft = function(){ this.shiftPagContainer(200); };
 		this.shiftRight = function(){ this.shiftPagContainer(-200); };
@@ -75,36 +92,16 @@ function koScope(){
 			if(lastItem.offset().left + lastItem.width() + shift < contWrap.offset().left + contWrap.width())
 				cont.css('left',(cont.offset().left - lastItem.offset().left - lastItem.width() - 10 + contWrap.width()) + "px");
 		};
-		this.showPaginator = function(items){
-			var dataLength = items.length;
-			$(".paginator .pagecontainer").empty();
-			for(var i = 0; i < (dataLength/self.maxItemsOnPage); i++){
-				var container = $(".paginator .pagecontainer").append("<div>" + (i + 1) + "</div>");
-				var item = $(".paginator .pagecontainer :last-child");
-				item.addClass(i.toString());
-				if(i == 0) item.addClass("active");
-				$(".pagecontainer_wrap").width( $(".pagecontainer_wrap").width() + 30 );
-			};
-		};
 		this.select = function(data, event){
-			if(event.target.className == "pagecontainer")
-				return;
-			$(".pagecontainer div").removeClass("active");
-			var newActiveNumber = parseInt(event.target.className);
-			var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
-			var activeItem = $($(".pagecontainer div")[newActiveNumber]);
-			var shift = targetPosition - activeItem.offset().left;
-			activeItem.addClass("active");
-			this.shiftPagContainer(shift - 20);
-			this.firstCityNum = newActiveNumber * this.maxItemsOnPage;
-			parent.outputData.items( filteredData.slice(this.firstCityNum, this.firstCityNum + this.maxItemsOnPage) );
+			self.activePaginationItem( parseInt(event.target.className) );
+			// var targetPosition = $(".pagecontainer_wrap").offset().left + $(".pagecontainer_wrap").width()/2;
+			// var activeItem = $($(".pagecontainer div")[newActiveNumber]);
+			// var shift = targetPosition - activeItem.offset().left;
+			// this.shiftPagContainer(shift - 20);
+			self.firstCityNum = self.activePaginationItem() * self.maxItemsOnPage();
+			parent.outputData.items( filteredData().slice(self.firstCityNum, self.firstCityNum + self.maxItemsOnPage()) );
 		};
 	})(this); // end of pagination
-
-	// privet vars
-	var citiesData = {};
-	var filteredData = {};
-	//end of the privet vars
 
 	this.outputData = {
 		populationMin: ko.observable(100),
@@ -124,11 +121,9 @@ function koScope(){
 		};
 		$.post('./backend/refreshData.php', data, function(response){
 			citiesData = response;
-			filteredData = self.tabs.filterData(citiesData, self.tabs.activeMethod());
-			self.paginator.showPaginator(filteredData);
-			// todo: придумать что-то со структурой и убрать вызов koScope1 отсюда
+			filteredData(self.tabs.filterData(citiesData, self.tabs.activeMethod()));
 			var paginatorObj = self.paginator;
-			self.outputData.items( filteredData.slice(paginatorObj.firstCityNum, paginatorObj.firstCityNum + paginatorObj.maxItemsOnPage) );
+			self.outputData.items( filteredData().slice(paginatorObj.firstCityNum, paginatorObj.firstCityNum + paginatorObj.maxItemsOnPage()) );
 		}, 'json');
 	};
 	this.refreshData();
