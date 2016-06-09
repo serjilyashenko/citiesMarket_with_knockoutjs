@@ -1,7 +1,3 @@
-// todo: поместить в объеты это
-var citiesData = {};
-var filteredData = {};
-
 $(document).ready(function () {
 	console.log("Hello Cities Market");
 	ko.applyBindings(new koScope(), document.getElementsByTagName("body")[0]);
@@ -61,7 +57,7 @@ function koScope(){
 		};
 	})(this);	// end of Filtration tabs
 
-	// Pagination
+	// Pagination object
 	this.paginator = new (function(parent){
 		var self = this;
 		this.firstCityNum = 0;
@@ -104,6 +100,11 @@ function koScope(){
 			parent.outputData.items( filteredData.slice(this.firstCityNum, this.firstCityNum + this.maxItemsOnPage) );
 		};
 	})(this); // end of pagination
+
+	// privet vars
+	var citiesData = {};
+	var filteredData = {};
+	//end of the privet vars
 
 	this.outputData = {
 		populationMin: ko.observable(100),
