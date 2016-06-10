@@ -48,10 +48,7 @@ function koScope(){
 		this.onClick = function(tabElement){
 			self.activeMethod(tabElement.title);
 			filteredData(self.filterData(citiesData, self.activeMethod()));
-			var paginatorObj = parent.paginator;
-			paginatorObj.firstCityNum = 0;
-			paginatorObj.activePaginationItem(0);
-			parent.outputData.items( filteredData().slice(paginatorObj.firstCityNum, paginatorObj.firstCityNum + paginatorObj.maxItemsOnPage()) );
+			parent.paginator.select(0);		// refresh paginator on start position
 		};
 		this.filterData = function(citiesData, tabsMethod){
 			if(tabsMethod === "все"){
